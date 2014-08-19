@@ -1,0 +1,125 @@
+<assembly>
+
+    <id>bin</id>
+
+    <formats>
+        <format>tar.gz</format>
+    </formats>
+
+    <fileSets>
+
+        <!-- Expanded Karaf Standard Distribution -->
+        <fileSet>
+            <directory>target/karaf-mm/apache-karaf-2.3.3</directory>
+            <outputDirectory>/</outputDirectory>
+            <excludes>
+                <!-- exclude from the distro the demo directory -->
+                <exclude>**/demos/**</exclude>
+
+                <exclude>bin/**</exclude>
+                <!-- Because the following files will be replaced by customized one,
+                here it's excluding from the distro the following files from the 'etc' dir:
+                    * system.properties: replaced by the /distribution/system.properties file
+                    * user.properties: replaced by the /distribution/user.properties file
+                    * org.apache.karaf.features.cfg: replaced by distribution/org.apache.karaf.features.cfg file
+                    * org.ops4j.pax.logging.cfg: replaced by the distribution/org.ops4j.pax.logging.cfg file
+                    * org.ops4j.pax.url.mvn.cfg: replaced by the distribution/org.ops4j.pax.url.mvn.cfg file
+                 -->
+                <exclude>etc/custom.properties</exclude>
+                <exclude>etc/system.properties</exclude>
+                <exclude>etc/users.properties</exclude>
+                <exclude>etc/org.apache.karaf.features.cfg</exclude>
+                <exclude>etc/org.ops4j.pax.logging.cfg</exclude>
+                <exclude>etc/org.ops4j.pax.url.mvn.cfg</exclude>
+
+                <exclude>LICENSE</exclude>
+                <exclude>NOTICE</exclude>
+                <exclude>README</exclude>
+                <exclude>RELEASE-NOTES</exclude>
+
+                <exclude>karaf-manual*.html</exclude>
+                <exclude>karaf-manual*.pdf</exclude>
+            </excludes>
+        </fileSet>
+
+        <!-- Copy over bin/* separately to get the correct file mode -->
+        <fileSet>
+            <directory>target/karaf-mm/apache-karaf-2.3.3</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>bin/admin</include>
+                <include>bin/karaf</include>
+                <include>bin/client</include>
+                <include>bin/start</include>
+                <include>bin/stop</include>
+            </includes>
+            <fileMode>0755</fileMode>
+        </fileSet>
+
+        <!-- Copy over jar files in lib -->
+        <fileSet>
+            <directory>target/karaf-mm</directory>
+            <includes>
+                <include>karaf-mm-rebranding.jar</include>
+            </includes>
+            <outputDirectory>/lib/</outputDirectory>
+        </fileSet>
+
+        <!-- Copy over *.* files in src/main/distribution in $KARAF_HOME/etc dir  -->
+        <fileSet>
+            <directory>src/main/distribution</directory>
+            <outputDirectory>/etc/</outputDirectory>
+            <fileMode>0755</fileMode>
+        </fileSet>
+
+        <!-- Copy over .cfg files from target/classes in $KARAF_HOME/etc dir  -->
+        <fileSet>
+            <directory>target/classes</directory>
+            <includes>
+                <include>*.cfg</include>
+            </includes>
+            <outputDirectory>/etc/</outputDirectory>
+            <fileMode>0755</fileMode>
+        </fileSet>
+
+        <!-- Copy over dir target/system-mm in $KARAF_HOME/system-mm dir -->
+        <fileSet>
+            <directory>target/system-mm</directory>
+            <outputDirectory>/system</outputDirectory>
+            <fileMode>0755</fileMode>
+        </fileSet>
+
+
+    </fileSets>
+    <!-- Copy over kar file in $KARAF_HOME/deploy dir
+    <fileSet>
+        <directory>target</directory>
+        <includes>
+            <include>gi.features-1.0.3-SNAPSHOT.kar</include>
+        </includes>
+        <outputDirectory>/deploy/</outputDirectory>
+        <fileMode>0644</fileMode>
+    </fileSet>
+    -->
+    <!--
+    <files>
+
+        <file>
+            <source>target/karaf-mm/apache-karaf-2.3.3/bin/karaf</source>
+            <outputDirectory>/bin/</outputDirectory>
+            <destName>mm-karaf</destName>
+            <fileMode>0755</fileMode>
+            <lineEnding>unix</lineEnding>
+        </file>
+
+        <file>
+            <source>target/classes/features.xml</source>
+            <outputDirectory>/system/my.groupid/my-features/3.0.0-SNAPSHOT</outputDirectory>
+            <destName>my-features-3.0.0-SNAPSHOT-features.xml</destName>
+            <fileMode>0644</fileMode>
+            <lineEnding>unix</lineEnding>
+        </file>
+
+    </files>
+    -->
+</assembly>

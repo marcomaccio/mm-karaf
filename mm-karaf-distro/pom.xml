@@ -1,0 +1,234 @@
+<project
+        xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+       <groupId>name.marmac.appservers</groupId>
+       <artifactId>mm-karaf</artifactId>
+       <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>mm-karaf-distro</artifactId>
+    <packaging>pom</packaging>
+
+    <name>KARAF - MM DISTRO :: CUSTOM DISTRIBUTION</name>
+    <description>Karaf MM Custom Distribution</description>
+
+<!-- URL NOT YET AVAILABLE -->
+    <url>mm-karaf-distro</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <build>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+        <defaultGoal>install</defaultGoal>
+
+        <!-- This specifies which resource to filter -->
+        <resources>
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+                <excludes/>
+            </resource>
+
+            <resource>
+                <directory>${project.basedir}/src/main/filtered-resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+                <excludes/>
+                </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven-resources-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>filter</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>resources</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>${maven-dependency-plugin.version}</version>
+                <executions>
+                <!-- Copy the branding jar -->
+                    <execution>
+                    <id>copy</id>
+                    <phase>generate-resources</phase>
+                    <goals>
+                      <goal>copy</goal>
+                    </goals>
+                    <configuration>
+                       <!-- Define here the artifacts which should be considered in the assembly -->
+                       <!-- For instance, the branding jar -->
+                       <artifactItems>
+                         <artifactItem>
+                            <groupId>name.marmac.appservers</groupId>
+                            <artifactId>karaf-mm-rebranding</artifactId>
+                            <version>${project.version}</version>
+                            <outputDirectory>${project.build.directory}/karaf-mm</outputDirectory>
+                            <destFileName>karaf-mm-rebranding.jar</destFileName>
+                         </artifactItem>
+                       </artifactItems>
+                    </configuration>
+                    </execution>
+                <!-- Unpack Karaf -->
+                    <execution>
+                        <id>unpack-karaf</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                        <!-- unpack the karaf dependency that's been downloaded
+                        from your local 3rd party repo -->
+                        <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/karaf-mm</outputDirectory>
+
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--  -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>${build-helper-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-artifacts</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>attach-artifact</goal>
+                        </goals>
+                        <configuration>
+                            <artifacts>
+                                <artifact>
+                                    <file>target/classes/features.xml</file>
+                                    <type>xml</type>
+                                    <classifier>features</classifier>
+                                </artifact>
+
+                            </artifacts>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.apache.karaf.tooling</groupId>
+                <artifactId>features-maven-plugin</artifactId>
+                <version>${features-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>add-features-to-repo</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>add-features-to-repo</goal>
+                        </goals>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>mvn:org.apache.karaf.assemblies.features/standard/${karaf.version}/xml/features</descriptor>
+                                <descriptor>mvn:org.apache.karaf.assemblies.features/enterprise/${karaf.version}/xml/features</descriptor>
+                                <descriptor>mvn:io.hawt/hawtio-karaf/${hawtio.version}/xml/features</descriptor>
+
+                            </descriptors>
+                            <features>
+
+                                <feature>jndi</feature>
+                                <feature>transaction</feature>
+                                <feature>jpa</feature>
+                                <feature>hawtio</feature>
+
+                            </features>
+                            <repository>${project.build.directory}/system-mm</repository>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>create-cxf-dependency-kar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>create-kar</goal>
+                        </goals>
+                        <configuration>
+                            <resourcesDir>${project.build.directory}/doesNotExist</resourcesDir>
+                            <featuresFile>${project.build.directory}/classes/cxf-dep-features.xml</featuresFile>
+                            <finalName>cxf-dep-${project.version}</finalName>
+                        </configuration>
+                    </execution>
+                </executions>
+
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <!--<version>${maven-assembly-plugin.version}</version>-->
+                <executions>
+                  <execution>
+                    <id>bin</id>
+                    <phase>package</phase>
+                    <goals>
+                      <goal>single</goal>
+                    </goals>
+                    <configuration>
+                      <descriptors>
+                        <descriptor>src/main/descriptors/bin.xml</descriptor>
+                      </descriptors>
+                      <appendAssemblyId>false</appendAssemblyId>
+                      <tarLongFileMode>gnu</tarLongFileMode>
+                    </configuration>
+                  </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.karaf</groupId>
+            <artifactId>apache-karaf</artifactId>
+            <version>${karaf.version}</version>
+            <type>tar.gz</type>
+        </dependency>
+
+        <!--
+        <dependency>
+            <groupId>org.apache.karaf.assemblies.features</groupId>
+            <artifactId>standard</artifactId>
+            <version>${karaf.version}</version>
+            <type>xml</type>
+            <classifier>features</classifier>
+        </dependency>
+        -->
+        <dependency>
+            <groupId>name.marmac.appservers</groupId>
+            <artifactId>karaf-mm-rebranding</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
+
+</project>

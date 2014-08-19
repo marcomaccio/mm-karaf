@@ -1,0 +1,49 @@
+<project
+        xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>name.marmac.appservers</groupId>
+       <artifactId>mm-karaf</artifactId>
+       <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>mm-karaf-rebranding</artifactId>
+    <packaging>bundle</packaging>
+
+    <name>KARAF - MM DISTRO :: RE-BRANDING </name>
+    <description>Karaf MM Custom Distribution - Re-branding module</description>
+
+    <url>mm-karaf-rebranding</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>${maven-bundle-plugin.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Bundle-Name>${project.name}</Bundle-Name>
+                        <Bundle-Version>${project.version}</Bundle-Version>
+                        <Import-Package>*</Import-Package>
+                        <Private-Package>!*</Private-Package>
+                        <Export-Package>org.apache.karaf.branding</Export-Package>
+                        <Spring-Context>*;public-context:=false</Spring-Context>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+ 
+</project>

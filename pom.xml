@@ -1,0 +1,356 @@
+<project
+        xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>name.marmac.appservers</groupId>
+    <artifactId>mm-karaf</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <packaging>pom</packaging>
+
+    <name>KARAF - MM DISTRO</name>
+    <description>Karaf MM Custom Distribution</description>
+
+    <modules>
+        <module>mm-karaf-rebranding</module>
+        <module>mm-karaf-distro</module>
+    </modules>
+<!-- URL NOT YET AVAILABLE -->
+    <url>http://docs.marmac.name/appservers/mm-karaf</url>
+
+    <organization>
+    <name>MARMAC</name>
+    <url>http://www.marmac.name</url>
+    </organization>
+  
+    <inceptionYear>2014</inceptionYear>
+
+    <developers>
+        <developer>
+            <id>marmac</id>
+            <name>Marco Maccio</name>
+            <roles>
+                <role>System Architect</role>
+                <role>Software Designer</role>
+                <role>Developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <wagon-webdav-jackrabbit.version>2.4</wagon-webdav-jackrabbit.version>
+
+        <maven-resources-plugin.version>2.6</maven-resources-plugin.version>
+        <maven-compiler-plugin.version>3.0</maven-compiler-plugin.version>
+        <maven-bundle-plugin.version>2.3.7</maven-bundle-plugin.version>
+        <maven-site-plugin.version>3.3</maven-site-plugin.version>
+        <maven-scm-plugin.version>1.8.1</maven-scm-plugin.version>
+        <maven-release-plugin.version>2.4.1</maven-release-plugin.version>
+        <maven-dependency-plugin.version>2.7</maven-dependency-plugin.version>
+        <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
+        <maven-jaxb2-plugin.version>0.8.3</maven-jaxb2-plugin.version>
+
+        <buildnumber-maven-plugin.version>1.3</buildnumber-maven-plugin.version>
+        <build-helper-maven-plugin.version>1.8</build-helper-maven-plugin.version>
+        <features-maven-plugin.version>2.3.3</features-maven-plugin.version>
+        <umlgraph.version>5.6.6</umlgraph.version>
+
+        <source.java.version>1.7</source.java.version>
+        <target.java.version>1.7</target.java.version>
+
+        <javax-persistence.version>2.0.0</javax-persistence.version>
+        <javax-persistence.version.excluded>2.1.0</javax-persistence.version.excluded>
+        <jaxb2-basics.version>0.6.5</jaxb2-basics.version>
+        <jaxb2-basics-annotate.version>0.6.5</jaxb2-basics-annotate.version>
+
+        <!-- VERSION FOR DEPENDENCY LIBRARY USED AT RUNTIME - START -->
+
+        <!-- OSGI FRAMEWORK VERSIONS -->
+        <karaf.version>2.3.3</karaf.version>
+        <org-apache-felix-framework.version>4.0.3</org-apache-felix-framework.version>
+        <karaf-plugin.depends.version>1.2</karaf-plugin.depends.version>
+        <org-apache-karaf-shell-console.version>2.3.3</org-apache-karaf-shell-console.version>
+
+        <hawtio.version>1.4.0</hawtio.version>
+
+        <cxf.version>2.7.6</cxf.version>
+        <cxf-xjc-dv.version>2.2.12</cxf-xjc-dv.version>
+
+        <camel.version>2.12.2</camel.version>
+        <jclouds.version>1.6.2-incubating</jclouds.version>
+
+        <guava.version>14.0.1</guava.version>
+        <xbean-blueprint.version>3.12</xbean-blueprint.version>
+
+        <apache-aries-transaction>1.0.0</apache-aries-transaction>
+        <apache-aries-transaction-manager.version>1.0.1</apache-aries-transaction-manager.version>
+
+        <smx-specs-jsr311-api-1.1.1.version>2.4.0</smx-specs-jsr311-api-1.1.1.version>
+        <smx-specs-stax-api-1.2.version>2.2.0</smx-specs-stax-api-1.2.version>
+
+        <smx-bundles-commons-collections.version>3.2.1_1</smx-bundles-commons-collections.version>
+        <smx-bundles-commons-httpclient.version>3.1_7</smx-bundles-commons-httpclient.version>
+        <smx-bundles-commons-dbcp.version>1.4_3</smx-bundles-commons-dbcp.version>
+        <smx-bundles-commons-lang.version>2.4_6</smx-bundles-commons-lang.version>
+        <smx-bundles-commons-pool.version>1.5.4_4</smx-bundles-commons-pool.version>
+        <smx-bundles-commons-codec.version>1.3_5</smx-bundles-commons-codec.version>
+
+        <smx-bundles-serp.version>1.14.1_1</smx-bundles-serp.version>
+        <smx-bundles-nethi.version>2.0.4_5</smx-bundles-nethi.version>
+        <smx-bundles-swagger-jaxrs.version>1.3.0_1</smx-bundles-swagger-jaxrs.version>
+        <smx-bundles-json4s.version>3.2.4_1</smx-bundles-json4s.version>
+        <smx-bundles-reflections.version>0.9.8_1</smx-bundles-reflections.version>
+        <smx-bundles-javassist.version>3.12.1.GA_2</smx-bundles-javassist.version>
+        <smx-bundles-swagger-annotation.version>1.3.0_1</smx-bundles-swagger-annotation.version>
+        <smx-bundles-swagger-core.version>1.3.0_1</smx-bundles-swagger-core.version>
+        <smx-bundles-jackson-scala.version>2.1.5_2</smx-bundles-jackson-scala.version>
+
+        <scala-library.version>2.10.2</scala-library.version>
+        <codehaus-jackson.version>1.9.13</codehaus-jackson.version>
+        <fasterxml-jackson.version>2.2.1</fasterxml-jackson.version>
+
+        <javaee-web-api.version>7.0</javaee-web-api.version>
+        <swagger-jaxrs_2.10.version>1.3.2</swagger-jaxrs_2.10.version>
+
+        <servicemix.specs.jsr311-api-1.1.1.version>2.4.0</servicemix.specs.jsr311-api-1.1.1.version>
+        <servicemix.bundles.commons-httpclient.version>3.1_7</servicemix.bundles.commons-httpclient.version>
+
+        <slf4j.version>1.6.6</slf4j.version>
+        <slf4j-log4j12.version>1.7.5</slf4j-log4j12.version>
+        <log4j.version>1.2.17</log4j.version>
+        <!-- VERSION FOR DEPENDENCY LIBRARY USED AT RUNTIME - END -->
+
+        <junit.version>4.11</junit.version>
+        <pax-exam.version>3.3.0</pax-exam.version>
+        <pax-url.version>1.6.0</pax-url.version>
+        <karaf-plugin.depends.version>1.2</karaf-plugin.depends.version>
+        <org-apache-karaf-shell-console.version>2.3.3</org-apache-karaf-shell-console.version>
+
+
+        <sonar-maven-plugin.version>4.3</sonar-maven-plugin.version>
+
+        <!-- BUILD DIRECTORY FOR KARAF, WHERE KARAF WILL BE UNTAR AND CUSTOMIZED -->
+        <karaf.build.dir>${project.build.directory}/karaf/apache-karaf-${karaf.version}</karaf.build.dir>
+        <rpm.install.basedir>/opt/Apache/karaf</rpm.install.basedir>
+        <rpm.install.configdir>${rpm.install.basedir}/etc</rpm.install.configdir>
+        <rpm.install.logdir>${rpm.install.basedir}/data/log</rpm.install.logdir>
+
+    </properties>
+   
+    <scm>
+        <connection>scm:svn:http://code.maccio-ch.homelinux.net/svn/projects/trunk/appservers/karaf-mm</connection>
+        <developerConnection>scm:svn:http://code.maccio-ch.homelinux.net/svn/projects/trunk/appservers/karaf-mm</developerConnection>
+        <url>http://code.maccio-ch.homelinux.net/svn/projects/trunk/appservers/karaf-mm</url>
+    </scm>
+
+    <!-- Considering to use a NEXUS OSS repo with its default values -->
+    <distributionManagement>
+        <snapshotRepository>
+            <id>marmac-m2-repository-snapshot</id>
+            <name>Maven 2 Repository Snapshot</name>
+            <url>http://repo.maccio-ch.homelinux.net/content/repositories/snapshots/</url>
+            <uniqueVersion>false</uniqueVersion>
+            <layout>default</layout>
+        </snapshotRepository>
+
+        <repository>
+            <id>marmac-m2-repository-release</id>
+            <name>Maven 2 Repository Release</name>
+            <url>http://repo.maccio-ch.homelinux.net/content/repositories/releases/</url>
+            <uniqueVersion>false</uniqueVersion>
+            <layout>default</layout>
+        </repository>
+    </distributionManagement>
+
+
+    <build>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+        <defaultGoal>install</defaultGoal>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${source.java.version}</source>
+                    <target>${target.java.version}</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-scm-plugin</artifactId>
+                <version>${maven-scm-plugin.version}</version>
+                <configuration>
+                <connectionType>connection</connectionType>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>${maven-release-plugin.version}</version>
+                <configuration>
+                <branchBase>http://code.maccio-ch.homelinux.net/svn/projects/appservers/branches/</branchBase>
+                <tagBase>http://code.maccio-ch.homelinux.net/svn/projects/appservers/tags/</tagBase>
+                <connectionUrl>scm:svn:http://code.maccio-ch.homelinux.net/svn/projects/appservers/trunk/karaf-mm</connectionUrl>
+                <goals>deploy</goals>
+                <autoVersionSubmodules>true</autoVersionSubmodules>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.3</version>
+                <executions>
+                    <execution>
+                    <phase>validate</phase>
+                    <goals>
+                    <goal>create</goal>
+                    </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <doCheck>false</doCheck>
+                    <doUpdate>false</doUpdate>
+                </configuration>
+            </plugin>
+        </plugins>
+
+    </build>
+
+    <profiles>
+        <profile>
+            <id>rpm</id>
+            <activation>
+            <os>
+                <name>linux</name>
+            </os>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>rpm-maven-plugin</artifactId>
+                        <version>2.1-alpha-4</version>
+                        <extensions>true</extensions>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>attached-rpm</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+
+                        <configuration>
+
+                            <copyright>Copyright 2014 MarMac SA</copyright>
+                            <distribution>MarMac-Platform-1.0.0</distribution>
+                            <group>Networking/Daemons</group>
+                            <packager>${user.name}</packager>
+
+                            <release>${buildNumber}</release>
+                            <defaultDirmode>755</defaultDirmode>
+                            <defaultFilemode>444</defaultFilemode>
+                            <defaultUsername>www-data</defaultUsername>
+                            <defaultGroupname>www-data</defaultGroupname>
+
+                            <mappings>
+
+                                <mapping>
+                                    <directory>${rpm.install.basedir}/bin</directory>
+                                    <filemode>555</filemode>
+                                    <sources>
+                                        <source>
+                                            <location>${karaf.build.dir}/bin</location>
+                                        </source>
+                                    </sources>
+                                </mapping>
+
+                                <mapping>
+                                    <directory>${rpm.install.basedir}/data</directory>
+                                    <sources>
+                                        <source>
+                                            <location>${karaf.build.dir}/data</location>
+                                        </source>
+                                    </sources>
+                                </mapping>
+
+                                <mapping>
+                                    <directory>${rpm.install.basedir}/deploy</directory>
+                                    <sources>
+                                        <source>
+                                            <location>${karaf.build.dir}/deploy</location>
+                                        </source>
+                                    </sources>
+                                </mapping>
+
+                                <mapping>
+                                    <directory>${rpm.install.basedir}/etc</directory>
+                                    <sources>
+                                        <source>
+                                            <location>${karaf.build.dir}/etc</location>
+                                        </source>
+                                    </sources>
+                                </mapping>
+
+                                <mapping>
+                                    <directory>${rpm.install.basedir}/instances</directory>
+                                    <sources>
+                                        <source>
+                                            <location>${karaf.build.dir}/instances</location>
+                                        </source>
+                                    </sources>
+                                </mapping>
+
+                                <mapping>
+                                    <directory>${rpm.install.basedir}/lib</directory>
+                                    <sources>
+                                        <source>
+                                            <location>${karaf.build.dir}/lib</location>
+                                        </source>
+                                    </sources>
+                                </mapping>
+
+                                <mapping>
+                                    <directory>${rpm.install.basedir}/system</directory>
+                                    <sources>
+                                        <source>
+                                            <location>${karaf.build.dir}/system</location>
+                                        </source>
+                                    </sources>
+                                </mapping>
+
+                            </mappings>
+
+                            <!-- (Optional) -->
+                            <preinstallScriptlet>
+                                <script>echo "installing now"</script>
+                            </preinstallScriptlet>
+
+                            <!-- (Optional) -->
+                            <postinstallScriptlet>
+                                <script>echo "WARNING: Restart Karaf to ensure changes take effect."</script>
+                            </postinstallScriptlet>
+
+                            <preremoveScriptlet>
+                                <script>echo "removing now"</script>
+                                <fileEncoding>utf-8</fileEncoding>
+                            </preremoveScriptlet>
+
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>

@@ -1,0 +1,38 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+		<groupId>name.marmac.appserver</groupId>
+       <artifactId>karaf-mm</artifactId>
+       <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  
+  <artifactId>karaf-mm-rebranding</artifactId>    
+  <packaging>pom</packaging>
+
+  <name>KARAF - MM DISTRO :: RE-BRANDING </name>
+  <description>Karaf MM Custom Distribution - Re-branding module</description>
+
+<!-- URL NOT YET AVAILABLE -->
+  <url>http://docs.marmac.name/appservers/karaf-mm-distro</url> 
+
+  <organization>
+    <name>MARMAC</name>
+    <url>http://www.marmac.name</url>
+  </organization>
+
+  <properties>
+     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>     
+   </properties>
+
+
+ <dependencies>
+   <dependency>
+      <groupId>org.apache.karaf</groupId>
+      <artifactId>apache-karaf</artifactId>
+      <version>${karaf.version}</version>
+      <type>tar.gz</type>
+   </dependency>
+ </dependencies>
+</project>
