@@ -144,9 +144,9 @@
     </properties>
    
     <scm>
-        <connection>scm:svn:http://code.maccio-ch.homelinux.net/svn/projects/trunk/appservers/karaf-mm</connection>
-        <developerConnection>scm:svn:http://code.maccio-ch.homelinux.net/svn/projects/trunk/appservers/karaf-mm</developerConnection>
-        <url>http://code.maccio-ch.homelinux.net/svn/projects/trunk/appservers/karaf-mm</url>
+        <connection>scm:git:ssh://github.com/marcomaccio/mm-karaf.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/marcomaccio/karaf-mm.git</developerConnection>
+        <url>https://github.com/marcomaccio/karaf-mm</url>
     </scm>
 
     <!-- Considering to use a NEXUS OSS repo with its default values -->
@@ -209,7 +209,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>buildnumber-maven-plugin</artifactId>
-                <version>1.3</version>
+                <version>${buildnumber-maven-plugin.version}</version>
                 <executions>
                     <execution>
                     <phase>validate</phase>
